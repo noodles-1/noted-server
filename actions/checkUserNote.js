@@ -9,5 +9,7 @@ export async function checkUserNote(userId, noteId) {
                         .and('noteId').equals(noteId)
                         .return.first()
 
-    return note
+    if (!note)
+        return null
+    return note.category !== 'deleted' ? note : null
 }
