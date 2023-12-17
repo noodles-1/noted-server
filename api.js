@@ -9,7 +9,8 @@ import {
     getNote,
     updateNote,
     createUser,
-    getDeletedNotes
+    getDeletedNotes,
+    deleteNote
 } from './actions/index.js'
 
 export const router = express.Router()
@@ -116,6 +117,17 @@ router.post('/update-note', async (req, res) => {
 router.post('/create-user', async (req, res) => {
     try {
         await createUser(req.body.userId)
+        res.sendStatus(200)
+    }
+    catch (err) {
+        console.log(err)
+        res.sendStatus(500)
+    }
+})
+
+router.post('/delete-note', async (req, res) => {
+    try {
+        await deleteNote(req.body.noteId)
         res.sendStatus(200)
     }
     catch (err) {
