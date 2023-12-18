@@ -4,8 +4,9 @@ import { Repository } from "redis-om"
 
 export async function createUser(userId) {
     const repository = new Repository(userSchema, client)
+    
+    const user = repository.fetch(userId)
 
-    const userExists = await repository.search().where('userId').equals(userId).return.first()
-    if (!userExists)
-        await repository.save({ userId: userId, spellchecked: true, wallpaper: '/background3.jpg' })
+    if (!user)
+        await repository.save(userId, { spellchecked: true, wallpaper: '/background3.jpg' })
 }

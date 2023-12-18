@@ -4,7 +4,7 @@ import { Repository } from "redis-om"
 
 export async function updateNote(note) {
     const repository = new Repository(noteSchema, client)
-    const result = await repository.search().where('noteId').equals(note.noteId).first()
+    const result = await repository.fetch(note.noteId)
 
     if (result) {
         result.title = note.title

@@ -5,7 +5,7 @@ import { Repository } from "redis-om"
 export async function updateUser(user) {
     const repository = new Repository(userSchema, client)
 
-    const result = await repository.search().where('userId').equals(user.userId).return.first()
+    const result = await repository.fetch(user.userId)
 
     if (result) {
         result.spellchecked = user.spellchecked

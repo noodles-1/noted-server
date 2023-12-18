@@ -5,6 +5,5 @@ import { client } from "../redis.js";
 export async function deleteNote(noteId) {
     const repository = new Repository(noteSchema, client)
 
-    const note = await repository.search().where('noteId').equals(noteId).return.firstId()
-    await repository.remove(note)
+    await repository.remove(noteId)
 }
