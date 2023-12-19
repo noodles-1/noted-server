@@ -12,7 +12,8 @@ import {
     getDeletedNotes,
     deleteNote,
     getUser,
-    updateUser
+    updateUser,
+    deleteNotes
 } from './actions/index.js'
 
 export const router = express.Router()
@@ -141,6 +142,17 @@ router.post('/create-user', async (req, res) => {
 router.post('/delete-note', async (req, res) => {
     try {
         await deleteNote(req.body.noteId)
+        res.sendStatus(200)
+    }
+    catch (err) {
+        console.log(err)
+        res.sendStatus(500)
+    }
+})
+
+router.post('/delete-notes', async (req, res) => {
+    try {
+        await deleteNotes(req.body.userId)
         res.sendStatus(200)
     }
     catch (err) {

@@ -6,11 +6,9 @@ export async function updateNote(note) {
     const repository = new Repository(noteSchema, client)
     const result = await repository.fetch(note.noteId)
 
-    if (result) {
-        result.title = note.title
-        result.body = note.body
-        result.category = note.category
-        result.modified = note.modified
-        await repository.save(result)
-    }
+    result.title = note.title
+    result.body = note.body
+    result.category = note.category
+    result.modified = note.modified
+    await repository.save(result)
 }

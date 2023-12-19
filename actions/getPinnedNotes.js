@@ -5,10 +5,15 @@ import { Repository } from "redis-om"
 export async function getPinnedNotes(userId) {
     const repository = new Repository(noteSchema, client)
 
-    const notes = await repository.search().where('userId').equals(userId)
+    let notes = await repository.search().where('userId').equals(userId)
                             .sortBy('modified', 'DESC')
                             .return.all()
-    
+
+    notes.map(note => {
+        const symbols = Object.getOwnPropertySymbols(note)
+        note.noteId = note[symbols[0]]
+    })
+
     return notes.filter((note) => {
         return note.category === 'pinned'
     })

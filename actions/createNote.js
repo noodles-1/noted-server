@@ -6,8 +6,6 @@ import uniqid from 'uniqid'
 export async function createNote(userId) {
     const repository = new Repository(noteSchema, client)
 
-    const noteId = uniqid('note_')
-
     const note = {
         userId: userId,
         title: '',
@@ -17,7 +15,9 @@ export async function createNote(userId) {
         modified: new Date()
     }
 
-    const newNote = await repository.save(noteId, note)
-    newNote.noteId = noteId
+    const newNote = await repository.save(uniqid('note_'), note)
+    const symbols = Object.getOwnPropertySymbols(newNote)
+    newNote.noteId = newNote[symbols[0]]
+
     return newNote
 }
