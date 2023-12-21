@@ -106,9 +106,9 @@ router.get('/get-user/:userId', async (req, res) => {
 
 
 // POST requests
-router.post('/create-note/:userId', async (req, res) => {
+router.post('/create-note', async (req, res) => {
     try {
-        const note = await createNote(req.params.userId)
+        const note = await createNote(req.body.userId)
         res.json(note)
     }
     catch (err) {
